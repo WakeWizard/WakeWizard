@@ -1,0 +1,1342 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fa;
+    color: #20242a;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.app-header {
+    height: 72px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+    border-bottom: 1px solid #ddd;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.menu-button {
+    border: 0;
+    background: transparent;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.header-logo {
+    width: 42px;
+    height: 42px;
+}
+
+.brand-name {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.system-status {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    position: fixed;
+    top: 72px;
+    bottom: 36px;
+    left: 0;
+    width: 220px;
+    background: #20242a;
+    padding-top: 16px;
+    transform: translateX(-220px);
+    transition: transform 0.2s ease;
+    z-index: 1000;
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.sidebar a {
+    display: block;
+    padding: 14px 20px;
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #1670d2;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.content {
+    padding: 32px 40px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.page-header h1 {
+    margin: 0;
+}
+
+.page-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.section-header {
+    margin-bottom: 14px;
+}
+
+.section-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.scan-results,
+.configured-devices {
+    margin-bottom: 30px;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.primary-button,
+.secondary-button,
+.wake-button,
+.use-device-button {
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.primary-button {
+    padding: 10px 18px;
+    border: 0;
+    background: #1670d2;
+    color: white;
+}
+
+.secondary-button {
+    padding: 10px 18px;
+    border: 1px solid #1670d2;
+    background: white;
+    color: #1670d2;
+}
+
+.secondary-button:hover {
+    background: #eef5fd;
+}
+
+.wake-button {
+    border: 0;
+    padding: 10px 18px;
+    background: #1670d2;
+    color: white;
+}
+
+.wake-button:hover {
+    opacity: 0.9;
+}
+
+.use-device-button {
+    padding: 8px 16px;
+    border: 0;
+    background: #1670d2;
+    color: white;
+}
+
+.edit-device-button,
+.delete-device-button {
+    padding: 10px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-device-button {
+    border: 1px solid #1670d2;
+    background: white;
+    color: #1670d2;
+}
+
+.delete-device-button {
+    border: 1px solid #b42318;
+    background: white;
+    color: #b42318;
+}
+
+
+/* =========================================================
+   TABLE / GRID SHARED LAYOUT
+   Name | IP Address | MAC Address | Action
+   ========================================================= */
+
+.scan-table-header,
+.scan-device,
+.device-table-header,
+.device-card {
+    display: grid;
+    grid-template-columns:
+        minmax(180px, 1.3fr)
+        minmax(170px, 1fr)
+        minmax(220px, 1.2fr)
+        260px;
+    gap: 20px;
+    align-items: center;
+}
+
+.scan-table-header,
+.device-table-header {
+    padding: 0 24px 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    border-bottom: 2px solid #ececec;
+}
+
+
+/* =========================================================
+   DISCOVERED DEVICES
+   ========================================================= */
+
+.scan-results {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px 26px;
+}
+
+.scan-results h2 {
+    margin-top: 0;
+}
+
+.scan-device {
+    padding: 14px 24px;
+    border-bottom: 1px solid #eee;
+}
+
+.scan-device:last-child {
+    border-bottom: 0;
+}
+
+.scan-name,
+.device-name {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.scan-ip,
+.device-ip,
+.scan-mac,
+.device-mac {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 14px;
+}
+
+.scan-mac,
+.device-mac {
+    color: #666;
+}
+
+.scan-actions,
+.device-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.unknown-device {
+    color: #999;
+    font-style: italic;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   CONFIGURED DEVICES
+   ========================================================= */
+
+.device-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.device-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 18px 24px;
+}
+
+.device-card > div {
+    min-width: 0;
+}
+
+
+/* =========================================================
+   SCAN LOADING ANIMATION
+   ========================================================= */
+
+.scan-loading {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 16px;
+    padding: 8px 24px;
+}
+
+.loading-dots span {
+    opacity: 0;
+    animation: loadingDots 1.4s infinite;
+}
+
+.loading-dots span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes loadingDots {
+    0%, 20% {
+        opacity: 0;
+    }
+
+    40%, 100% {
+        opacity: 1;
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.app-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 36px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid #ddd;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+    .system-status {
+        flex-direction: column;
+        gap: 2px;
+        font-size: 11px;
+    }
+
+    .brand-name {
+        display: none;
+    }
+
+    .content {
+        padding: 20px 20px 56px;
+    }
+
+    .page-header {
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .page-actions {
+        flex-direction: column;
+    }
+
+    .scan-table-header,
+    .device-table-header {
+        display: none;
+    }
+
+    .scan-device,
+    .device-card {
+        grid-template-columns: 1fr auto;
+        gap: 6px 12px;
+    }
+
+    .scan-name,
+    .device-name,
+    .scan-ip,
+    .device-ip,
+    .scan-mac,
+    .device-mac {
+        grid-column: 1;
+    }
+
+    .scan-actions,
+    .device-actions {
+        grid-column: 2;
+        grid-row: 1 / span 3;
+        align-self: center;
+    }
+}
+
+
+/* DEVICE EDITOR */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.device-editor {
+    width: min(620px, 100%);
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+
+    background: white;
+    border-radius: 10px;
+
+    padding: 24px;
+
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+}
+
+.device-editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 24px;
+}
+
+.device-editor-header h2 {
+    margin: 0;
+}
+
+.modal-close-button {
+    border: 0;
+    background: transparent;
+
+    font-size: 28px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+
+    padding: 10px 12px;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    font-family: inherit;
+    font-size: 15px;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #1670d2;
+}
+
+.required {
+    color: #c62828;
+}
+
+.unit-label {
+    color: #777;
+    font-weight: 500;
+}
+
+.help-button {
+    border: 0;
+    padding: 0;
+
+    background: transparent;
+    color: #1670d2;
+
+    cursor: help;
+
+    font-size: 15px;
+}
+
+.advanced-toggle {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 4px 0 18px;
+    padding: 12px 0;
+
+    border: 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+
+    background: transparent;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.advanced-settings {
+    margin-bottom: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 18px;
+}
+
+.checkbox-group {
+    margin: 14px 0;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 14px;
+}
+
+.device-editor-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    margin-top: 24px;
+}
+
+.tooltip {
+    position: fixed;
+    z-index: 3000;
+
+    max-width: 320px;
+
+    padding: 10px 12px;
+
+    background: #20242a;
+    color: white;
+
+    border-radius: 6px;
+
+    font-size: 13px;
+    line-height: 1.4;
+
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+
+    pointer-events: none;
+}
+
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .device-editor {
+        padding: 20px;
+    }
+}
+
+.device-editor-actions button {
+    min-width: 110px;
+}
+
+/* =========================================================
+   CONFIGURATION BACKUP / RESTORE
+   ========================================================= */
+
+.config-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin-bottom: 30px;
+}
+
+.config-description {
+    margin: 0 0 20px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.config-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.selected-config-file {
+    color: #666;
+    font-size: 14px;
+    min-width: 160px;
+}
+
+.config-warning {
+    margin: 18px 0 0;
+    color: #8a5a00;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.config-actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* WakeWizard UI */
+
+.device-config-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+
+    margin: -2px 0 14px;
+    padding: 0 0 12px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.device-config-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+    padding: 0 18px;
+
+    border: 1px solid #1670d2;
+    border-radius: 5px;
+
+    background: white;
+    color: #1670d2;
+
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.device-config-link:hover:not(:disabled) {
+    background: #eef5fd;
+    text-decoration: none;
+}
+
+.device-config-link:focus-visible {
+    outline: 2px solid #1670d2;
+    outline-offset: 2px;
+}
+
+.device-config-link:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.device-config-restore {
+    color: #1670d2;
+}
+
+.device-config-toolbar .selected-config-file {
+    min-width: 0;
+    max-width: 320px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: #666;
+    font-size: 13px;
+}
+
+@media (max-width: 700px) {
+    .device-config-toolbar {
+        gap: 12px 16px;
+    }
+
+    .device-config-toolbar .selected-config-file {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+/* WakeWizard UI */
+
+.log-panel {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 22px 24px 24px;
+}
+
+.log-toolbar {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) minmax(260px, 2fr) minmax(140px, 0.7fr);
+    gap: 16px;
+    align-items: end;
+}
+
+.log-control {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.log-control label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #555;
+}
+
+.log-control input,
+.log-control select {
+    width: 100%;
+    height: 38px;
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: white;
+    font: inherit;
+    font-size: 14px;
+}
+
+.log-control input:focus,
+.log-control select:focus {
+    outline: none;
+    border-color: #1670d2;
+}
+
+.log-meta {
+    margin: 14px 0 10px;
+    color: #666;
+    font-size: 12px;
+}
+
+.log-content {
+    height: min(62vh, 680px);
+    min-height: 360px;
+    overflow: auto;
+
+    padding: 12px 14px;
+
+    border: 1px solid #d8dadd;
+    border-radius: 6px;
+    background: #15181d;
+
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.log-line {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    color: #e6e8eb;
+}
+
+.log-info {
+    color: #e6e8eb;
+}
+
+.log-warn {
+    color: #ffd27a;
+}
+
+.log-error {
+    color: #ff8d8d;
+}
+
+.log-empty {
+    margin: 0;
+    color: #aeb4bc;
+}
+
+@media (max-width: 800px) {
+    .log-toolbar {
+        grid-template-columns: 1fr;
+    }
+
+    .log-content {
+        min-height: 300px;
+        height: 56vh;
+    }
+}
+
+
+/* WakeWizard UI */
+.log-page-actions {
+    flex-wrap: wrap;
+}
+
+.danger-outline-button {
+    background: #fff;
+    color: #c62828;
+    border: 1px solid #d32f2f;
+    border-radius: 6px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.danger-outline-button:hover:not(:disabled) {
+    background: #fff5f5;
+}
+
+.danger-outline-button:disabled,
+.log-page-actions button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* WakeWizard UI */
+.config-card {
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:18px 20px;
+    margin-bottom:16px;
+}
+.config-card h2 { margin:0 0 14px; font-size:18px; }
+.config-grid { display:grid; grid-template-columns:180px minmax(220px,1fr); gap:12px 18px; align-items:center; }
+.config-grid input, .config-grid select { width:100%; box-sizing:border-box; padding:10px; border:1px solid #d1d5db; border-radius:6px; }
+.config-inline { display:flex; gap:10px; align-items:center; }
+.config-inline select { flex:1; }
+.runtime-info { font-family:monospace; line-height:1.7; }
+.config-save-row { display:flex; justify-content:flex-end; margin:18px 0 28px; }
+@media(max-width:700px) {
+    .config-grid { grid-template-columns:1fr; }
+    .config-inline { align-items:stretch; flex-direction:column; }
+}
+
+
+/* WakeWizard UI */
+.config-validation-error {
+    margin: 10px 0 0;
+    color: #c62828;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* WakeWizard UI */
+.config-field-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.config-address-preview {
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.config-address-preview a {
+    color: #1670d2;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    text-decoration: none;
+}
+
+.config-address-preview a:hover {
+    text-decoration: underline;
+}
+
+.config-address-preview a.config-address-disabled {
+    color: #9ca3af;
+    pointer-events: none;
+    text-decoration: none;
+}
+
+
+/* WakeWizard UI */
+.config-field-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.config-address-preview {
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.config-address-preview a {
+    color: #1670d2;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    text-decoration: none;
+}
+
+.config-address-preview a:hover {
+    text-decoration: underline;
+}
+
+.config-address-preview a.config-address-disabled {
+    color: #9ca3af;
+    pointer-events: none;
+    text-decoration: none;
+}
+
+
+/* WakeWizard UI */
+.config-address-preview {
+    margin-top: 2px;
+    min-height: 18px;
+}
+
+.config-address-preview > span {
+    font-weight: 600;
+}
+
+
+/* WakeWizard UI */
+.duplicate-mac-row {
+    background: #fff4d6 !important;
+    box-shadow: inset 4px 0 0 #d97706;
+}
+
+.duplicate-mac-row:hover {
+    background: #ffedbd !important;
+}
+
+.scan-mac {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.duplicate-mac-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border: 1px solid #d97706;
+    border-radius: 999px;
+    background: #fff7ed;
+    color: #9a3412;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+
+/* WakeWizard UI */
+.config-backup-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+}
+
+
+/* WakeWizard UI */
+.config-backup-help {
+    margin-top: 14px;
+    color: #5f6368;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.config-backup-help p {
+    margin: 5px 0;
+}
+
+/* WakeWizard UI */
+.system-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-bottom:16px; }
+.system-kv-row { display:flex; justify-content:space-between; gap:20px; padding:8px 0; border-bottom:1px solid #e5e7eb; }
+.system-kv-row:last-child { border-bottom:0; }
+.system-kv-row span { color:#64748b; }
+.system-kv-row strong { text-align:right; overflow-wrap:anywhere; }
+.ota-block { padding:10px 0 18px; border-bottom:1px solid #e5e7eb; }
+.ota-block:last-of-type { border-bottom:0; }
+.ota-block input { margin:8px 12px 8px 0; max-width:100%; }
+.danger-zone { border:1px solid #dc2626; }
+.danger-zone h2 { color:#b91c1c; }
+.danger-button { background:#b91c1c; color:white; border:0; border-radius:6px; padding:10px 16px; cursor:pointer; }
+
+
+/* WakeWizard UI */
+.wifi-header-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.wifi-signal-dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    min-width: 9px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.wifi-signal-strong {
+    background: #16a34a;
+}
+
+.wifi-signal-fair {
+    background: #eab308;
+}
+
+.wifi-signal-low {
+    background: #f97316;
+}
+
+.wifi-signal-very-low {
+    background: #dc2626;
+}
+
+.wifi-signal-unknown {
+    background: #9ca3af;
+}
+
+.header-device-url {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.header-device-url:hover {
+    text-decoration: underline;
+}
+
+
+/* WakeWizard UI */
+.login-view {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+    background: #f8fafc;
+}
+
+.login-card {
+    width: min(420px, 100%);
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 28px;
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.login-logo {
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+}
+
+.login-card h1 {
+    margin: 0 0 10px;
+    text-align: center;
+}
+
+.login-help {
+    margin: 0 0 22px;
+    color: #64748b;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.login-card label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+}
+
+.login-card input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+}
+
+.login-button {
+    width: 100%;
+    margin-top: 16px;
+}
+
+.sidebar-logout {
+    margin-top: 18px;
+    border-top: 1px solid rgba(148, 163, 184, 0.25);
+    padding-top: 18px !important;
+}
+
+
+.show-password-control {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 7px;
+    width: fit-content;
+    font-weight: 400 !important;
+    cursor: pointer;
+}
+
+.show-password-control input {
+    width: auto !important;
+    margin: 0;
+}
+
+
+/* WakeWizard UI */
+.password-input-row {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+}
+
+.password-input-row > input {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.password-toggle-button {
+    flex: 0 0 auto;
+    min-width: 82px;
+    white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+    .password-input-row {
+        flex-direction: column;
+    }
+
+    .password-toggle-button {
+        width: 100%;
+    }
+}
+
+
+/* WakeWizard UI */
+.log-auto-refresh-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 0;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.log-auto-refresh-toggle input[type="checkbox"] {
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px;
+    min-height: 18px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+
+
+/* WakeWizard UI */
+.header-language {
+    display: inline-flex;
+    align-items: center;
+}
+
+.header-language select {
+    min-height: 28px;
+    padding: 4px 28px 4px 9px;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    background: white;
+    color: #20242a;
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.header-language select:focus {
+    outline: none;
+    border-color: #1670d2;
+}
+
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+@media (max-width: 700px) {
+    .header-language select {
+        height: 28px;
+        max-width: 120px;
+        font-size: 11px;
+    }
+}
+
+
+/* WakeWizard UI */
+.advanced-scan-panel {
+    margin: -12px 0 24px;
+    padding: 16px 18px;
+    background: #fff;
+    border: 1px solid #dbe2ea;
+    border-radius: 8px;
+}
+
+.advanced-scan-fields {
+    display: grid;
+    grid-template-columns:
+        minmax(210px, 1fr)
+        minmax(210px, 1fr)
+        auto;
+    gap: 14px;
+    align-items: end;
+}
+
+.advanced-scan-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.advanced-scan-field label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #555;
+}
+
+.advanced-scan-field input {
+    width: 100%;
+    height: 38px;
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: white;
+    font: inherit;
+    font-size: 14px;
+}
+
+.advanced-scan-field input:focus {
+    outline: none;
+    border-color: #1670d2;
+}
+
+.advanced-scan-help {
+    margin: 10px 0 0;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+#advancedScanValidation {
+    margin-top: 10px;
+}
+
+@media (max-width: 800px) {
+    .advanced-scan-fields {
+        grid-template-columns: 1fr;
+    }
+
+    #advancedScanButton {
+        width: 100%;
+    }
+}

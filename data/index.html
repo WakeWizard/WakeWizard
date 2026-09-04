@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <title data-i18n="app.name"></title>
+
+    <link rel="stylesheet" href="/css/style.css?v=patch013">
+    <script src="/js/app.js?v=patch013" defer></script>
+</head>
+
+<body>
+
+<div
+    id="loginView"
+    class="login-view hidden">
+    <div class="login-card">
+        <img
+            src="/img/logo.svg"
+            class="login-logo"
+            alt="WakeWizard">
+
+        <h1 data-i18n="auth.loginTitle"></h1>
+
+        <p
+            class="login-help"
+            data-i18n="auth.loginHelp">
+        </p>
+
+        <form id="loginForm">
+            <label
+                for="loginPassword"
+                data-i18n="auth.password">
+            </label>
+
+            <input
+                id="loginPassword"
+                type="password"
+                autocomplete="current-password"
+                required>
+
+            <p
+                id="loginError"
+                class="config-validation-error hidden">
+            </p>
+
+            <button
+                type="submit"
+                class="primary-button login-button"
+                data-i18n="auth.login">
+            </button>
+        </form>
+    </div>
+</div>
+
+<div id="appShell" class="hidden">
+
+<header class="app-header">
+    <div class="brand">
+        <button
+            id="menuButton"
+            class="menu-button"
+            data-i18n-aria-label="aria.menu">
+            ☰
+        </button>
+
+        <img
+            src="/img/logo.svg"
+            class="header-logo"
+            alt="WakeWizard">
+
+        <span class="brand-name" data-i18n="app.name"></span>
+    </div>
+
+    <div class="system-status">
+        <span class="wifi-header-status">
+            <span
+                id="wifiSignalDot"
+                class="wifi-signal-dot wifi-signal-unknown"
+                aria-hidden="true">
+            </span>
+
+            <span id="wifiStatus">-</span>
+        </span>
+
+        <span>
+            <span data-i18n="system.url"></span>:
+            <a
+                id="headerDeviceUrl"
+                class="header-device-url"
+                href="#"
+                target="_self">
+                -
+            </a>
+        </span>
+
+        <span>
+            <span data-i18n="system.ip"></span>:
+            <strong id="ipAddress">-</strong>
+        </span>
+
+        <label
+            class="header-language"
+            for="languageSelect">
+            <span
+                class="sr-only"
+                data-i18n="language.label">
+            </span>
+
+            <select
+                id="languageSelect"
+                data-i18n-aria-label="language.label">
+            </select>
+        </label>
+    </div>
+</header>
+
+<nav id="sidebar" class="sidebar">
+    <a href="#" id="devicesNavLink" class="active" data-i18n="menu.devices"></a>
+    <a href="#" id="logNavLink" data-i18n="menu.log"></a>
+    <a href="#" id="systemNavLink" data-i18n="menu.system"></a>
+    <a href="#" id="configNavLink" data-i18n="menu.config"></a>
+    <a href="#" id="logoutNavLink" class="sidebar-logout" data-i18n="auth.logout"></a>
+</nav>
+
+<main class="content">
+    <div id="devicesView">
+    <div class="page-header">
+        <h1 data-i18n="page.devices"></h1>
+
+        <div class="page-actions">
+            <button
+                id="scanNetworkButton"
+                class="secondary-button"
+                data-i18n="button.scanNetwork">
+            </button>
+
+            <button
+                id="advancedScanToggleButton"
+                class="secondary-button"
+                data-i18n="scan.advanced">
+            </button>
+
+            <button
+                id="wakeAllButton"
+                class="secondary-button"
+                data-i18n="button.wakeAll">
+            </button>
+
+            <button
+                id="addDeviceButton"
+                class="primary-button"
+                data-i18n="button.addDevice">
+            </button>
+        </div>
+    </div>
+
+    <section
+        id="advancedScanPanel"
+        class="advanced-scan-panel hidden">
+
+        <div class="advanced-scan-fields">
+            <div class="advanced-scan-field">
+                <label
+                    for="advancedScanStart"
+                    data-i18n="scan.startIp">
+                </label>
+
+                <input
+                    id="advancedScanStart"
+                    type="text"
+                    inputmode="decimal"
+                    data-i18n-placeholder="scan.startIpPlaceholder">
+            </div>
+
+            <div class="advanced-scan-field">
+                <label
+                    for="advancedScanEnd"
+                    data-i18n="scan.endIp">
+                </label>
+
+                <input
+                    id="advancedScanEnd"
+                    type="text"
+                    inputmode="decimal"
+                    data-i18n-placeholder="scan.endIpPlaceholder">
+            </div>
+
+            <button
+                id="advancedScanButton"
+                class="primary-button"
+                data-i18n="scan.scanRange">
+            </button>
+        </div>
+
+        <p
+            class="advanced-scan-help"
+            data-i18n="scan.rangeHelp">
+        </p>
+
+        <p
+            id="advancedScanValidation"
+            class="config-validation-error hidden">
+        </p>
+    </section>
+
+    <section id="scanResults" class="scan-results hidden">
+        <div class="section-header">
+            <h2 data-i18n="section.discoveredDevices"></h2>
+        </div>
+
+        <div class="scan-table-header">
+            <span data-i18n="column.name"></span>
+            <span data-i18n="column.ipAddress"></span>
+            <span data-i18n="column.macAddress"></span>
+            <span data-i18n="column.action"></span>
+        </div>
+
+        <div id="scanDeviceList"></div>
+    </section>
+
+    <section class="configured-devices">
+        <div class="section-header">
+            <h2 data-i18n="section.configuredDevices"></h2>
+        </div>
+
+        <div class="device-config-toolbar">
+            <button
+                id="downloadConfigButton"
+                class="device-config-link"
+                data-i18n="button.downloadConfiguration">
+            </button>
+
+            <button
+                id="chooseConfigFileButton"
+                class="device-config-link"
+                data-i18n="button.chooseConfigurationFile">
+            </button>
+
+            <input
+                id="configFileInput"
+                type="file"
+                accept=".json,application/json"
+                class="hidden">
+
+            <span
+                id="selectedConfigFileName"
+                class="selected-config-file hidden">
+            </span>
+
+            <button
+                id="restoreConfigButton"
+                class="device-config-link device-config-restore hidden"
+                data-i18n="button.restoreConfiguration"
+                disabled>
+            </button>
+        </div>
+
+        <div class="device-table-header">
+            <span data-i18n="column.name"></span>
+            <span data-i18n="column.ipAddress"></span>
+            <span data-i18n="column.macAddress"></span>
+            <span data-i18n="column.action"></span>
+        </div>
+
+        <div id="deviceList" class="device-list">
+            <p data-i18n="status.loadingDevices"></p>
+        </div>
+    </section>
+    </div>
+
+    <div id="logView" class="hidden">
+        <div class="page-header">
+            <h1 data-i18n="page.log"></h1>
+
+            <div class="page-actions log-page-actions">
+                <button
+                    id="downloadLogButton"
+                    class="secondary-button"
+                    data-i18n="button.downloadLog">
+                </button>
+
+                <button
+                    id="deleteLogButton"
+                    class="danger-outline-button"
+                    data-i18n="button.deleteLog">
+                </button>
+
+                <button
+                    id="deleteLogHistoryButton"
+                    class="danger-outline-button"
+                    data-i18n="button.deleteLogHistory">
+                </button>
+
+                <button
+                    id="refreshLogButton"
+                    class="secondary-button"
+                    data-i18n="button.refresh">
+                </button>
+            </div>
+        </div>
+
+        <section class="log-panel">
+            <div class="log-toolbar">
+                <div class="log-control">
+                    <label for="logFileSelect" data-i18n="log.file"></label>
+                    <select id="logFileSelect"></select>
+                </div>
+
+                <div class="log-control log-search-control">
+                    <label for="logSearchInput" data-i18n="log.search"></label>
+                    <input
+                        id="logSearchInput"
+                        type="search"
+                        data-i18n-placeholder="log.searchPlaceholder">
+                </div>
+
+                <div class="log-control">
+                    <label for="logLevelSelect" data-i18n="log.level"></label>
+                    <select id="logLevelSelect">
+                        <option value="ALL" data-i18n="log.level.all"></option>
+                        <option value="INFO" data-i18n="log.level.info"></option>
+                        <option value="WARN" data-i18n="log.level.warn"></option>
+                        <option value="ERROR" data-i18n="log.level.error"></option>
+                    </select>
+                </div>
+
+                <div class="log-control log-auto-refresh-control">
+                    <label data-i18n="log.autoRefresh"></label>
+                    <label class="log-auto-refresh-toggle">
+                        <input
+                            id="logAutoRefresh"
+                            type="checkbox"
+                            checked>
+                        <span data-i18n="log.everyTwoSeconds"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="logMeta" class="log-meta"></div>
+
+            <div id="logContent" class="log-content">
+                <p data-i18n="log.loading"></p>
+            </div>
+        </section>
+    </div>
+
+    <div id="systemView" class="hidden">
+    <div class="page-header">
+        <h1 data-i18n="page.system"></h1>
+        <button id="refreshSystemButton" class="secondary-button" data-i18n="system.refresh"></button>
+    </div>
+
+    <div class="system-grid">
+        <section class="config-card">
+            <h2 data-i18n="system.deviceInfo"></h2>
+            <div class="system-kv" id="systemDeviceInfo"></div>
+        </section>
+
+        <section class="config-card">
+            <h2 data-i18n="system.hardware"></h2>
+            <div class="system-kv" id="systemHardwareInfo"></div>
+        </section>
+
+        <section class="config-card">
+            <h2 data-i18n="system.network"></h2>
+            <div class="system-kv" id="systemNetworkInfo"></div>
+        </section>
+
+        <section class="config-card">
+            <h2 data-i18n="system.storage"></h2>
+            <div class="system-kv" id="systemStorageInfo"></div>
+        </section>
+
+        <section class="config-card">
+            <h2 data-i18n="system.time"></h2>
+            <div class="system-kv" id="systemTimeInfo"></div>
+        </section>
+    </div>
+
+    <section class="config-card">
+        <h2 data-i18n="system.maintenance"></h2>
+        <p class="config-description" data-i18n="system.maintenanceHelp"></p>
+        <button id="rebootSystemButton" class="secondary-button" data-i18n="system.reboot"></button>
+    </section>
+
+    <section class="config-card">
+        <h2 data-i18n="system.updates"></h2>
+        <div class="ota-block">
+            <h3 data-i18n="system.firmware"></h3>
+            <p><span data-i18n="system.currentVersion"></span>: <strong id="systemFirmwareVersion">-</strong></p>
+            <input id="firmwareFileInput" type="file" accept=".bin,application/octet-stream">
+            <button id="uploadFirmwareButton" class="secondary-button" data-i18n="system.uploadFirmware"></button>
+        </div>
+        <div class="ota-block">
+            <h3 data-i18n="system.filesystem"></h3>
+            <p class="config-description" data-i18n="system.filesystemHelp"></p>
+            <input id="filesystemFileInput" type="file" accept=".bin,application/octet-stream">
+            <button id="uploadFilesystemButton" class="secondary-button" data-i18n="system.uploadFilesystem"></button>
+        </div>
+        <p id="otaStatus" class="config-description"></p>
+    </section>
+
+    <section class="config-card danger-zone">
+        <h2 data-i18n="system.dangerZone"></h2>
+        <p data-i18n="system.factoryResetHelp"></p>
+        <button id="factoryResetSystemButton" class="danger-button" data-i18n="system.factoryReset"></button>
+    </section>
+</div>
+
+<div id="configView" class="hidden">
+        <div class="page-header">
+            <h1 data-i18n="page.config"></h1>
+        </div>
+
+        <section class="config-card">
+            <h2 data-i18n="config.device.title"></h2>
+            <div class="config-grid">
+                <label data-i18n="config.hostname"></label>
+
+                <div class="config-field-stack">
+                    <input
+                        id="configHostname"
+                        type="text"
+                        maxlength="32">
+
+                    <div class="config-address-preview">
+                        <span data-i18n="config.deviceAddress"></span>:
+                        <a
+                            id="configDeviceAddress"
+                            href="#"
+                            target="_blank"
+                            rel="noopener">
+                            -
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="config-card">
+            <h2 data-i18n="config.wifi.title"></h2>
+            <div class="config-grid">
+                <label data-i18n="config.ssid"></label>
+                <div class="config-inline">
+                    <select id="configSsid"></select>
+                    <button id="wifiRescanButton" class="secondary-button" data-i18n="config.rescan"></button>
+                </div>
+                <label data-i18n="config.wifiPassword"></label>
+                <div class="password-input-row">
+                    <input
+                        id="configWifiPassword"
+                        type="password"
+                        autocomplete="new-password">
+
+                    <button
+                        id="toggleWifiPasswordButton"
+                        type="button"
+                        class="secondary-button password-toggle-button"
+                        data-i18n="config.showWifiPassword">
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="config-card">
+            <h2 data-i18n="config.logging.title"></h2>
+            <div class="config-grid">
+                <label data-i18n="config.logRetention"></label>
+                <input id="configLogRetention" type="number" min="1" max="30">
+            </div>
+        </section>
+
+        <section class="config-card">
+            <h2 data-i18n="config.network.title"></h2>
+            <div id="configNetworkInfo" class="runtime-info"></div>
+        </section>
+
+        <section class="config-card">
+            <h2 data-i18n="config.security.title"></h2>
+            <p data-i18n="config.adminUser"></p>
+
+            <div class="config-grid">
+                <label data-i18n="config.adminPassword"></label>
+                <input
+                    id="configAdminPassword"
+                    type="password"
+                    minlength="8"
+                    autocomplete="new-password"
+                    data-i18n-placeholder="config.passwordPlaceholder">
+
+                <label data-i18n="config.adminPasswordConfirm"></label>
+                <input
+                    id="configAdminPasswordConfirm"
+                    type="password"
+                    minlength="8"
+                    autocomplete="new-password"
+                    data-i18n-placeholder="config.passwordConfirmPlaceholder">
+            </div>
+
+            <p
+                id="configPasswordMismatch"
+                class="config-validation-error hidden"
+                data-i18n="config.passwordMismatch">
+            </p>
+        </section>
+
+                <section class="config-card">
+            <h2 data-i18n="config.backup.title"></h2>
+
+            <p
+                class="config-description"
+                data-i18n="config.backup.description">
+            </p>
+
+            <div class="config-backup-actions">
+                <button
+                    id="exportWakeWizardConfigButton"
+                    class="secondary-button"
+                    data-i18n="config.backup.export">
+                </button>
+
+                <button
+                    id="chooseWakeWizardConfigButton"
+                    class="secondary-button"
+                    data-i18n="config.backup.import">
+                </button>
+
+                <input
+                    id="wakewizardConfigFileInput"
+                    type="file"
+                    accept=".json,application/json"
+                    class="hidden">
+
+                <span
+                    id="wakewizardConfigFileName"
+                    class="selected-config-file hidden">
+                </span>
+            </div>
+
+            <div class="config-backup-help">
+                <p data-i18n="config.backup.passwordsNotExported"></p>
+                <p data-i18n="config.backup.importFlow"></p>
+                <p data-i18n="config.backup.wifiPasswordRule"></p>
+                <p data-i18n="config.backup.adminPasswordRule"></p>
+            </div>
+        </section>
+
+<section class="config-card">
+            <h2 data-i18n="config.recovery.title"></h2>
+            <p data-i18n="config.recovery.hardware"></p>
+        </section>
+
+        <div class="config-save-row">
+            <button id="saveWakeWizardConfigButton" class="primary-button" data-i18n="config.save"></button>
+        </div>
+    </div>
+</main>
+
+<footer class="app-footer">
+  ✨ <span data-i18n="app.name"></span> &nbsp; <span id="firmwareVersion"></span>
+</footer>
+
+<div id="deviceEditorOverlay" class="modal-overlay hidden">
+    <div class="device-editor">
+        <div class="device-editor-header">
+            <h2 id="deviceEditorTitle"></h2>
+
+            <button
+                id="deviceEditorClose"
+                class="modal-close-button"
+                data-i18n-aria-label="aria.close">
+                ×
+            </button>
+        </div>
+
+        <form id="deviceEditorForm">
+            <div class="form-group">
+                <label for="deviceName">
+                    <span data-i18n="device.name"></span>
+                    <span class="required">*</span>
+
+                    <button
+                        type="button"
+                        class="help-button"
+                        data-tooltip-key="tooltip.device.name"
+                        data-i18n-aria-label="aria.help">
+                        ⓘ
+                    </button>
+                </label>
+
+                <input
+                    id="deviceName"
+                    name="name"
+                    type="text"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="deviceMac">
+                    <span data-i18n="device.mac"></span>
+
+                    <button
+                        type="button"
+                        class="help-button"
+                        data-tooltip-key="tooltip.device.mac"
+                        data-i18n-aria-label="aria.help">
+                        ⓘ
+                    </button>
+                </label>
+
+                <input
+                    id="deviceMac"
+                    name="mac"
+                    type="text"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="deviceIp">
+                    <span data-i18n="device.ip"></span>
+
+                    <button
+                        type="button"
+                        class="help-button"
+                        data-tooltip-key="tooltip.device.ip"
+                        data-i18n-aria-label="aria.help">
+                        ⓘ
+                    </button>
+                </label>
+
+                <input
+                    id="deviceIp"
+                    name="ip"
+                    type="text">
+            </div>
+
+            <button
+                id="advancedToggle"
+                type="button"
+                class="advanced-toggle">
+
+                <span data-i18n="deviceEditor.advanced"></span>
+                <span id="advancedToggleIcon">▼</span>
+            </button>
+
+            <div id="advancedSettings" class="advanced-settings hidden">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="initialDelay">
+                            <span data-i18n="device.initialDelay"></span>
+                            <span class="unit-label" data-i18n="unit.secondsShort"></span>
+                            <button type="button" class="help-button" data-tooltip-key="tooltip.device.initialDelay" data-i18n-aria-label="aria.help">ⓘ</button>
+                        </label>
+                        <input id="initialDelay" name="initialDelay" type="number" min="0" value="30">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="packetCount">
+                            <span data-i18n="device.packetCount"></span>
+                            <button type="button" class="help-button" data-tooltip-key="tooltip.device.packetCount" data-i18n-aria-label="aria.help">ⓘ</button>
+                        </label>
+                        <input id="packetCount" name="packetCount" type="number" min="1" value="5">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="packetInterval">
+                            <span data-i18n="device.packetInterval"></span>
+                            <span class="unit-label" data-i18n="unit.secondsShort"></span>
+                            <button type="button" class="help-button" data-tooltip-key="tooltip.device.packetInterval" data-i18n-aria-label="aria.help">ⓘ</button>
+                        </label>
+                        <input id="packetInterval" name="packetInterval" type="number" min="1" value="30">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="udpPort">
+                            <span data-i18n="device.udpPort"></span>
+                            <button type="button" class="help-button" data-tooltip-key="tooltip.device.udpPort" data-i18n-aria-label="aria.help">ⓘ</button>
+                        </label>
+                        <input id="udpPort" name="udpPort" type="number" min="1" max="65535" value="9">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="maxReachabilityChecks">
+                            <span data-i18n="device.maxReachabilityChecks"></span>
+                            <button type="button" class="help-button" data-tooltip-key="tooltip.device.maxReachabilityChecks" data-i18n-aria-label="aria.help">ⓘ</button>
+                        </label>
+                        <input id="maxReachabilityChecks" name="maxReachabilityChecks" type="number" min="1" value="20">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pingTimeoutMs">
+                            <span data-i18n="device.pingTimeout"></span>
+                            <span class="unit-label" data-i18n="unit.millisecondsShort"></span>
+                            <button type="button" class="help-button" data-tooltip-key="tooltip.device.pingTimeout" data-i18n-aria-label="aria.help">ⓘ</button>
+                        </label>
+                        <input id="pingTimeoutMs" name="pingTimeoutMs" type="number" min="1" value="500">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="broadcast">
+                        <span data-i18n="device.broadcast"></span>
+                        <button type="button" class="help-button" data-tooltip-key="tooltip.device.broadcast" data-i18n-aria-label="aria.help">ⓘ</button>
+                    </label>
+                    <input id="broadcast" name="broadcast" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="secureOn">
+                        <span data-i18n="device.secureOn"></span>
+                        <button type="button" class="help-button" data-tooltip-key="tooltip.device.secureOn" data-i18n-aria-label="aria.help">ⓘ</button>
+                    </label>
+                    <input id="secureOn" name="secureOn" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="category">
+                        <span data-i18n="device.category"></span>
+                        <button type="button" class="help-button" data-tooltip-key="tooltip.device.category" data-i18n-aria-label="aria.help">ⓘ</button>
+                    </label>
+                    <input id="category" name="category" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">
+                        <span data-i18n="device.notes"></span>
+                        <button type="button" class="help-button" data-tooltip-key="tooltip.device.notes" data-i18n-aria-label="aria.help">ⓘ</button>
+                    </label>
+                    <textarea id="notes" name="notes" rows="3"></textarea>
+                </div>
+
+                <div class="checkbox-group">
+                    <label>
+                        <input id="stopWhenReachable" name="stopWhenReachable" type="checkbox" checked>
+                        <span data-i18n="device.stopWhenReachable"></span>
+                        <button type="button" class="help-button" data-tooltip-key="tooltip.device.stopWhenReachable" data-i18n-aria-label="aria.help">ⓘ</button>
+                    </label>
+                </div>
+
+                <div class="checkbox-group">
+                    <label>
+                        <input id="wakeOnBoot" name="wakeOnBoot" type="checkbox" checked>
+                        <span data-i18n="device.wakeOnBoot"></span>
+                        <button type="button" class="help-button" data-tooltip-key="tooltip.device.wakeOnBoot" data-i18n-aria-label="aria.help">ⓘ</button>
+                    </label>
+                </div>
+
+                <div class="checkbox-group">
+                    <label>
+                        <input id="deviceEnabled" name="enabled" type="checkbox" checked>
+                        <span data-i18n="device.enabled"></span>
+                        <button type="button" class="help-button" data-tooltip-key="tooltip.device.enabled" data-i18n-aria-label="aria.help">ⓘ</button>
+                    </label>
+                </div>
+            </div>
+
+            <div class="device-editor-actions">
+                <button
+                    id="deviceEditorCancel"
+                    type="button"
+                    class="secondary-button"
+                    data-i18n="button.cancel">
+                </button>
+
+                <button
+                    id="deviceEditorSave"
+                    type="submit"
+                    class="primary-button"
+                    data-i18n="button.save">
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="tooltip" class="tooltip hidden"></div>
+
+</div>
+</body>
+</html>
