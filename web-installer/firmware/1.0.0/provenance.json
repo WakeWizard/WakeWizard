@@ -1,0 +1,40 @@
+{
+  "version": "1.0.0",
+  "source_commit": "18b217898a9c8dbbb0f1c5203794ef6362ecee0c",
+  "source_url": "https://github.com/WakeWizard/WakeWizard/tree/18b217898a9c8dbbb0f1c5203794ef6362ecee0c",
+  "origin": "WakeWizard-release.zip supplied by project owner; src, include, data and platformio.ini matched against source commit. Release firmware and LittleFS SHA256 verified.",
+  "tool": "esptool.py 4.11.0 merge_bin",
+  "flash": {
+    "mode": "dio",
+    "frequency": "40m",
+    "size": "4MB"
+  },
+  "framework": "3.20017.241212+sha.dcc1105b",
+  "components": {
+    "bootloader": {
+      "offset": 4096,
+      "size": 17536,
+      "sha256": "3d234a7471f67b013686dabd4dee7c1fa915c9928463616a94bc9297acf1abf8"
+    },
+    "partitions": {
+      "offset": 32768,
+      "size": 3072,
+      "sha256": "148b959cbff1c38aa8e1d5c0ba9d612c54997b945e56a63f41223eef650653a1"
+    },
+    "boot_app0": {
+      "offset": 57344,
+      "size": 8192,
+      "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0"
+    },
+    "firmware": {
+      "offset": 65536,
+      "size": 1004592,
+      "sha256": "5e16fa072f889d946b1133b22396f0073cf868d3fda7b0197a39ed9037c09832"
+    },
+    "littlefs": {
+      "offset": 2686976,
+      "size": 1441792,
+      "sha256": "fdbc8f764f4b011b06d4222c70b630173845c2f7c599d644432c96d44f6f4a43"
+    }
+  }
+}

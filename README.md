@@ -27,6 +27,14 @@ See [docs/Hardware.md](docs/Hardware.md) for hardware notes and [docs/BUILDING.m
 
 ## Quick start
 
+### Install from your browser
+
+Open **[WakeWizard Web Installer](https://wakewizard.github.io/WakeWizard/)** in Chrome or Edge on a computer and connect a classic ESP32 DevKit (4 MB flash) over USB. The installer includes firmware and LittleFS web resources.
+
+**This is a complete installation and erases all existing data.** Back up an existing device first; use the device's OTA interface for updates that should preserve settings. ESP32-C3, S2 and S3 are not supported by this build.
+
+See [Web installer maintenance](docs/WEB_INSTALLER.md) for hosting and release updates.
+
 ### Build and flash with PlatformIO
 
 1. Install VS Code and the PlatformIO extension.
