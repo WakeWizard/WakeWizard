@@ -2,3 +2,5 @@
 
 /* Display the supplied logo intact, including its wordmark. */
 .brand img{width:160px;height:auto;display:block;border-radius:10px}header{padding:12px 0}@media(max-width:800px){.brand img{width:112px;height:auto}}
+
+.header-actions{display:flex;align-items:center;gap:24px}.language-switch{display:flex;gap:3px;padding:4px;border:1px solid #d7e2ee;border-radius:8px;background:#fff}.language-switch a{padding:5px 10px;border-radius:5px;text-decoration:none;font-size:12px;font-weight:700;color:#52677c}.language-switch a[aria-current="page"]{background:var(--blue);color:#fff}@media(max-width:520px){.header-actions{flex-direction:column-reverse;align-items:flex-end;gap:12px}}

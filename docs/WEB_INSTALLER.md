@@ -81,3 +81,12 @@ consent gate. They do not replace flashing a physical board and verifying
 first boot, the setup AP and the web UI.
 
 Upstream integration reference: https://esphome.github.io/esp-web-tools/
+
+## Page languages
+
+The installer has English (`index.html`, the default) and Italian (`it.html`)
+pages with a flag and language-code switch in the header. The bare site URL
+restores the last chosen language using local browser storage. Explicit page
+links always open the selected language, even if storage is unavailable.
+Both pages use the same firmware manifest and installer logic. Changing
+language reloads the page; select a language before starting installation.
